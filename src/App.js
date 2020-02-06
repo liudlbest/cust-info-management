@@ -1,14 +1,18 @@
 import React from 'react';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
+import { Provider } from "react-redux";
+import { CssBaseline, 
+  Typography, 
+  Container 
+} from "@material-ui/core";
+
+import store from './store'
 import Search from './components/search'
 import HeaderBar from './components/headBar';
 import ResultTable from './components/resultTable';
 
 export default function SimpleContainer() {
   return (
-    <React.Fragment>
+    <Provider store={store}>
       <CssBaseline />
       <Container maxWidth="lg" >
         <Typography component="div" align="center" >
@@ -17,6 +21,6 @@ export default function SimpleContainer() {
           <ResultTable />
         </Typography>
       </Container>
-    </React.Fragment>
+    </Provider>
   );
 }

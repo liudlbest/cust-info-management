@@ -19,5 +19,5 @@ The user should be able to:
 git clone https://github.com/liudlbest/customer-information-management.git
 cd ./customer-information-management
 npm install
-npm start
+npm run dev
 ```
