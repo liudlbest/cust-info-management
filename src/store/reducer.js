@@ -1,8 +1,8 @@
 import { combineReducers } from "redux-immutable";
-import { reducer as resultTableReducer } from '../components/resultTable/store';
+import { reducer as resultReducer } from '../components/resultTable/store';
 
 const reducer = combineReducers({
-  result: resultTableReducer
+  result: resultReducer
 });
 
 export default reducer;

@@ -16,8 +16,8 @@ The user should be able to:
 
 ### Get Started
 ```bash
-git clone https://github.com/liudlbest/customer-information-management.git
-cd ./customer-information-management
+git clone https://github.com/liudlbest/cust-info-management.git
+cd ./cust-info-management
 npm install
 npm run dev
 ```

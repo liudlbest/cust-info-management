@@ -37,7 +37,6 @@ export default function Detail(props) {
                 })
             }
           </p>
-          <div>Hello</div>
         </div>
       </Modal>
     </div> 

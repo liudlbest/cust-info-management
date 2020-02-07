@@ -18,11 +18,16 @@ const headCells = [
 ];
 
 
+/**
+ * The head of the result table.
+ * @param {classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } props 
+ */
 export default function ResultTableHead(props) {
   const { classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
   const createSortHandler = property => event => {
     onRequestSort(event, property);
   };
+  
 
   return (
     <TableHead>

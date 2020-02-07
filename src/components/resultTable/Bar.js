@@ -12,6 +12,10 @@ import FilterListIcon from '@material-ui/icons/FilterList';
 
 import { useToolbarStyles } from './style'
 
+/**
+ * The bar of the result table with some tools.
+ * @param { numSelected } props 
+ */
 const ResultTableToolbar = props => {
   const classes = useToolbarStyles();
   const { numSelected } = props;

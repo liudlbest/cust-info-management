@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from "react-redux";
+import React from 'react';
+import { useSelector } from "react-redux";
 import { useStyles } from './style';
 import {
   Table,
@@ -12,15 +12,11 @@ import {
   Checkbox,
   FormControlLabel,
   Switch,
-  Button,
 } from '@material-ui/core';
 
 import ResultTableHead from './Head';
 import ResultTableToolbar from "./Bar";
-import { actions } from './store';
 import Detail from '../detail';
-import { render } from '@testing-library/react';
-
 
 // id, name, status, phone, email, notes
 
@@ -49,7 +45,9 @@ function getSorting(order, orderBy) {
   return order === 'desc' ? (a, b) => desc(a, b, orderBy) : (a, b) => -desc(a, b, orderBy);
 }
 
-
+/**
+ * A table to show the result
+ */
 export default function ResultTable() {
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
@@ -63,12 +61,6 @@ export default function ResultTable() {
     state => state.getIn(['result', 'customers'])
   )
   rows = rows.toJS();
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(actions.getCustomers())
-    return () => {
-    };
-  }, [dispatch])
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -168,13 +160,11 @@ export default function ResultTable() {
                       <TableCell component="th" id={labelId} scope="row" padding="none">
                         {row.id}
                       </TableCell>
-                      <TableCell align="right">{row.name}</TableCell>
-                      <TableCell align="right">{row.status}</TableCell>
-                      <TableCell align="right">{row.phone}</TableCell>
-                      <TableCell align="right">{row.email}</TableCell>
-                      <TableCell align="right">
-                        <Detail notes={row.notes} />
-                      </TableCell>
+                      <TableCell>{row.name}</TableCell>
+                      <TableCell>{row.status}</TableCell>
+                      <TableCell>{row.phone}</TableCell>
+                      <TableCell>{row.email}</TableCell>
+                      <TableCell><Detail notes={row.notes} /></TableCell>
                     </TableRow>
                   );
                 })}
