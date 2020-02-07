@@ -28,8 +28,6 @@ import { actions } from './store';
 
 // id, name, status, phone, email, notes
 
-const rows = [
-];
 
 function desc(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -56,11 +54,12 @@ function getSorting(order, orderBy) {
 }
 
 const headCells = [
-  { id: 'name', numeric: false, disablePadding: true, label: 'Dessert (100g serving)' },
-  { id: 'calories', numeric: true, disablePadding: false, label: 'Calories' },
-  { id: 'fat', numeric: true, disablePadding: false, label: 'Fat (g)' },
-  { id: 'carbs', numeric: true, disablePadding: false, label: 'Carbs (g)' },
-  { id: 'protein', numeric: true, disablePadding: false, label: 'Protein (g)' },
+  { id: 'id', disablePadding: true, label: 'ID' },
+  { id: 'name', disablePadding: false, label: 'Name' },
+  { id: 'status', disablePadding: false, label: 'Status' },
+  { id: 'phone', disablePadding: false, label: 'Phone' },
+  { id: 'email', disablePadding: false, label: 'Email' },
+  { id: 'notes', disablePadding: false, label: 'Notes' },
 ];
 
 function EnhancedTableHead(props) {
@@ -134,7 +133,7 @@ const ResultTableToolbar = props => {
         </Typography>
       ) : (
         <Typography className={classes.title} variant="h6" id="tableTitle">
-          Nutrition
+          Customer Information
         </Typography>
       )}
 
@@ -169,15 +168,16 @@ export default function ResultTable() {
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
-  const customers = useSelector(
+  let rows = useSelector(
     state => state.getIn(['result', 'customers'])
   )
+  rows = rows.toJS();
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(actions.getCustomers())
     return () => {
     };
-  })
+  }, [dispatch])
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -233,7 +233,6 @@ export default function ResultTable() {
 
   return (
     <div className={classes.root}>
-      <div>----{JSON.stringify(customers)}</div>
       <Paper className={classes.paper}>
         <ResultTableToolbar numSelected={selected.length} />
         <TableContainer>
@@ -276,12 +275,13 @@ export default function ResultTable() {
                         />
                       </TableCell>
                       <TableCell component="th" id={labelId} scope="row" padding="none">
-                        {row.name}
+                        {row.id}
                       </TableCell>
-                      <TableCell align="right">{row.calories}</TableCell>
-                      <TableCell align="right">{row.fat}</TableCell>
-                      <TableCell align="right">{row.carbs}</TableCell>
-                      <TableCell align="right">{row.protein}</TableCell>
+                      <TableCell align="right">{row.name}</TableCell>
+                      <TableCell align="right">{row.status}</TableCell>
+                      <TableCell align="right">{row.phone}</TableCell>
+                      <TableCell align="right">{row.email}</TableCell>
+                      <TableCell align="right">DETAIL</TableCell>
                     </TableRow>
                   );
                 })}

@@ -2,6 +2,7 @@ module.exports = function() {
   let faker = require('faker');
   let data = { customers: [] };
   let CUST_STATUS = ["prospective", "current", "non-active"]
+  // create 100 customers
   for (let i = 0; i < 100; i++) {
     data.customers.push({
       id: faker.finance.account(),
