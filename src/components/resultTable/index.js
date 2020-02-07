@@ -12,11 +12,14 @@ import {
   Checkbox,
   FormControlLabel,
   Switch,
+  Button,
 } from '@material-ui/core';
 
 import ResultTableHead from './Head';
 import ResultTableToolbar from "./Bar";
 import { actions } from './store';
+import Detail from '../detail';
+import { render } from '@testing-library/react';
 
 
 // id, name, status, phone, email, notes
@@ -169,7 +172,9 @@ export default function ResultTable() {
                       <TableCell align="right">{row.status}</TableCell>
                       <TableCell align="right">{row.phone}</TableCell>
                       <TableCell align="right">{row.email}</TableCell>
-                      <TableCell align="right">DETAIL</TableCell>
+                      <TableCell align="right">
+                        <Detail notes={row.notes} />
+                      </TableCell>
                     </TableRow>
                   );
                 })}

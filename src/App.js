@@ -9,6 +9,7 @@ import store from './store'
 import Search from './components/search'
 import HeaderBar from './components/headBar';
 import ResultTable from './components/resultTable';
+import Detail from './components/detail';
 
 export default function SimpleContainer() {
   return (
@@ -19,6 +20,7 @@ export default function SimpleContainer() {
           <HeaderBar />
           <Search />
           <ResultTable />
+          <Detail />
         </Typography>
       </Container>
     </Provider>
