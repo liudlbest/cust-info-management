@@ -1,28 +1,21 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux";
-import PropTypes from 'prop-types';
-import clsx from 'clsx';
-import { useToolbarStyles, useStyles } from './style';
+import { useStyles } from './style';
 import {
   Table,
   TableBody,
   TableCell,
   TableContainer,
-  TableHead,
   TablePagination,
   TableRow,
-  TableSortLabel,
-  Toolbar ,
-  Typography ,
   Paper,
   Checkbox,
-  IconButton,
-  Tooltip,
   FormControlLabel,
   Switch,
 } from '@material-ui/core';
-import DeleteIcon from '@material-ui/icons/Delete';
-import FilterListIcon from '@material-ui/icons/FilterList';
+
+import ResultTableHead from './Head';
+import ResultTableToolbar from "./Bar";
 import { actions } from './store';
 
 
@@ -52,111 +45,6 @@ function stableSort(array, cmp) {
 function getSorting(order, orderBy) {
   return order === 'desc' ? (a, b) => desc(a, b, orderBy) : (a, b) => -desc(a, b, orderBy);
 }
-
-const headCells = [
-  { id: 'id', disablePadding: true, label: 'ID' },
-  { id: 'name', disablePadding: false, label: 'Name' },
-  { id: 'status', disablePadding: false, label: 'Status' },
-  { id: 'phone', disablePadding: false, label: 'Phone' },
-  { id: 'email', disablePadding: false, label: 'Email' },
-  { id: 'notes', disablePadding: false, label: 'Notes' },
-];
-
-function EnhancedTableHead(props) {
-  const { classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
-  const createSortHandler = property => event => {
-    onRequestSort(event, property);
-  };
-
-  return (
-    <TableHead>
-      <TableRow>
-        <TableCell padding="checkbox">
-          <Checkbox
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{ 'aria-label': 'select all desserts' }}
-          />
-        </TableCell>
-        {headCells.map(headCell => (
-          <TableCell
-            key={headCell.id}
-            align={headCell.numeric ? 'right' : 'left'}
-            padding={headCell.disablePadding ? 'none' : 'default'}
-            sortDirection={orderBy === headCell.id ? order : false}
-          >
-            <TableSortLabel
-              active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : 'asc'}
-              onClick={createSortHandler(headCell.id)}
-            >
-              {headCell.label}
-              {orderBy === headCell.id ? (
-                <span className={classes.visuallyHidden}>
-                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                </span>
-              ) : null}
-            </TableSortLabel>
-          </TableCell>
-        ))}
-      </TableRow>
-    </TableHead>
-  );
-}
-
-EnhancedTableHead.propTypes = {
-  classes: PropTypes.object.isRequired,
-  numSelected: PropTypes.number.isRequired,
-  onRequestSort: PropTypes.func.isRequired,
-  onSelectAllClick: PropTypes.func.isRequired,
-  order: PropTypes.oneOf(['asc', 'desc']).isRequired,
-  orderBy: PropTypes.string.isRequired,
-  rowCount: PropTypes.number.isRequired,
-};
-
-
-
-const ResultTableToolbar = props => {
-  const classes = useToolbarStyles();
-  const { numSelected } = props;
-
-  return (
-    <Toolbar
-      className={clsx(classes.root, {
-        [classes.highlight]: numSelected > 0,
-      })}
-    >
-      {numSelected > 0 ? (
-        <Typography className={classes.title} color="inherit" variant="subtitle1">
-          {numSelected} selected
-        </Typography>
-      ) : (
-        <Typography className={classes.title} variant="h6" id="tableTitle">
-          Customer Information
-        </Typography>
-      )}
-
-      {numSelected > 0 ? (
-        <Tooltip title="Delete">
-          <IconButton aria-label="delete">
-            <DeleteIcon />
-          </IconButton>
-        </Tooltip>
-      ) : (
-        <Tooltip title="Filter list">
-          <IconButton aria-label="filter list">
-            <FilterListIcon />
-          </IconButton>
-        </Tooltip>
-      )}
-    </Toolbar>
-  );
-};
-
-ResultTableToolbar.propTypes = {
-  numSelected: PropTypes.number.isRequired,
-};
 
 
 export default function ResultTable() {
@@ -242,7 +130,7 @@ export default function ResultTable() {
             size={dense ? 'small' : 'medium'}
             aria-label="enhanced table"
           >
-            <EnhancedTableHead
+            <ResultTableHead
               classes={classes}
               numSelected={selected.length}
               order={order}
